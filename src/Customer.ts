@@ -22,7 +22,7 @@ export default class Customer {
     let result: string = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach((rental) => {
-      let thisAmount : number = this.amountFor(rental)
+      let thisAmount : number = rental.getCharge()
       frequentRenterPoints += 1
       if(rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1) frequentRenterPoints += 1
       result += `
@@ -31,28 +31,5 @@ export default class Customer {
       totalAmount += thisAmount
     })
     return result
-  }
-  private amountFor(rental: Rental): number {
-    let amount: number = 0;
-    switch (rental.getMovie().getPriceCode()) {
-      case Movie.REGULAR:
-        amount += 2.0
-        if(rental.getDaysRented() > 2) {
-          amount += (rental.getDaysRented() -2) * 1.5
-        }
-        break;
-      case Movie.NEW_RELEASE:
-        amount += rental.getDaysRented() * 3;
-        break
-      case Movie.CHILDRENS:
-        amount += 1.5
-        if(rental.getDaysRented() > 3) {
-          amount += (rental.getDaysRented() -3) *1.5
-        }
-        break
-      default:
-        break;
-    }
-    return amount
   }
 }
