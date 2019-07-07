@@ -22,13 +22,13 @@ export default class Customer {
     let result: string = `Rental Record for ${this.getName()} \n`
 
     rentals.forEach((rental) => {
-      let thisAmount : number = rental.getCharge()
       frequentRenterPoints += 1
-      if(rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1) frequentRenterPoints += 1
+      frequentRenterPoints += rental.getFrequentRentalPoint()
+
       result += `
-        \t ${rental.getMovie().getTitle()} \t ${thisAmount} \n
+        \t ${rental.getMovie().getTitle()} \t ${rental.getCharge()} \n
       `
-      totalAmount += thisAmount
+      totalAmount += rental.getCharge()
     })
     return result
   }
